@@ -82,10 +82,10 @@ public class Club {
         stats.setClub(null);
     }
 
-    public void addLeague(League league, int matchWon, int matchDrawn, int matchLost, int goalsFor, int goalsAgainst) throws Exception{
-        Stats stats = new Stats(matchWon, matchDrawn, matchLost, goalsFor, goalsAgainst, this, league);
+    public void addLeague(Season season, int matchWon, int matchDrawn, int matchLost, int goalsFor, int goalsAgainst) throws Exception{
+        Stats stats = new Stats(matchWon, matchDrawn, matchLost, goalsFor, goalsAgainst, this, season);
         addStats(stats);
-        league.addStats(stats);
+        season.addStats(stats);
     }
 
     @Override

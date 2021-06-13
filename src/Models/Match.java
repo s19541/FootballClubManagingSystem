@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,8 @@ import java.util.List;
 public class Match {
     private long id;
     private LocalDateTime date;
-    private int goalsFor;
-    private int goalsAgainst;
+    private int goalsFor = -1;
+    private int goalsAgainst = -1;
     private Club club;
     private List<Footballer> footballers = new ArrayList<>();
     private List<Supporter> supporters = new ArrayList<>();
@@ -28,6 +29,7 @@ public class Match {
 
     public Match(LocalDateTime date, Club opponent, int goalsFor, int goalsAgainst){
         this.date = date;
+        setClub(opponent);
         this.goalsFor = goalsFor;
         this.goalsAgainst = goalsAgainst;
     }
@@ -131,5 +133,21 @@ public class Match {
     public void removeSupporter(Supporter supporter) {
         getSupporters().remove(supporter);
         supporter.getMatches().remove(this);
+    }
+
+    @Transient
+    public boolean isFinished(){
+        if(date.isBefore(LocalDateTime.now()))
+            return true;
+        return false;
+    }
+    @Override
+    public String toString() {
+        String retString = club.getName() + " ";
+        if(isFinished())
+            retString += goalsFor+ ":" + goalsAgainst + " ";
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        retString += date.format(format);
+        return retString;
     }
 }

@@ -109,4 +109,9 @@ public class Footballer extends Worker {
         getMatches().remove(match);
         match.getFootballers().remove(this);
     }
+
+    @Override
+    public String toString() {
+        return getFirstName() + " " + getLastName() + " " + getPosition();
+    }
 }

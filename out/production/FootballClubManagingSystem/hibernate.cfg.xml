@@ -32,8 +32,9 @@ name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</proper
 <mapping class="Models.Training"/>
 <mapping class="Models.Pitch"/>
 <mapping class="Models.Match"/>
-<mapping class="Models.League"/>
+<mapping class="Models.Season"/>
 <mapping class="Models.Club"/>
 <mapping class="Models.Stats"/>
+<mapping class="Models.League"/>
 </session-factory>
 </hibernate-configuration>

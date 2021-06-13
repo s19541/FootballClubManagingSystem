@@ -50,7 +50,7 @@ public class Main {
         footballer1.addDietician(dietician);
         dietician.addFootballer(footballer2);
 
-        League league1 = new League("La liga", "Spain");
+        Season season1 = new Season(LocalDate.of(2020, 12 ,1 ), LocalDate.of(2021, 12 , 1));
 
         Club club1 = new Club("Real Madrid");
 
@@ -58,7 +58,7 @@ public class Main {
 
         try {
             //club1.addLeague(league1, 3, 2, 3, 4, 4);
-            league1.addClub(club1, 2, 2, 3, 4, 2);
+            season1.addClub(club1, 2, 2, 3, 4, 2);
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
@@ -84,7 +84,7 @@ public class Main {
             session.save(training1);
             session.save(training2);
             session.save(pitch1);
-            session.save(league1);
+            session.save(season1);
             session.save(club1);
             session.save(match1);
 
@@ -95,6 +95,10 @@ public class Main {
             List<Club> clubsFromDb = session.createQuery("from Club").list();
             for ( var club : clubsFromDb) {
                 System.out.println(club);
+            }
+            List<Match> matchesFromDb = session.createQuery("from Match").list();
+            for ( var match : matchesFromDb) {
+                System.out.println(match.getFootballers());
             }
             session.getTransaction().commit();
             session.close();

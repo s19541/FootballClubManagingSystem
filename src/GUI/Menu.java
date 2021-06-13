@@ -20,13 +20,12 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println(MatchController.getMatchSchedule());
-                System.out.println("saddsadsa");
             }
         });
         matchesButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new Matches(frame).getPanelMatches());
+                frame.setContentPane(new UpcomingMatches(frame).getPanelUpcomingMatches());
                 frame.pack();
             }
         });
@@ -40,10 +39,15 @@ public class Menu {
 
     public static void main(String[] args) {
         DbConnectionController.startConnectionWithDb();
+        DbConnectionController.prepareExampleData();
         frame = new JFrame("Menu");
         frame.setContentPane(new Menu().panelMain);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
+    }
+
+    public JPanel getPanelMain() {
+        return panelMain;
     }
 }

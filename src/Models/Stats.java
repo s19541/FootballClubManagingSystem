@@ -15,20 +15,20 @@ public class Stats {
     private int goalsFor;
     private int goalsAgainst;
     private Club club;
-    private League league;
+    private Season season;
     private static List<Stats> extent = new ArrayList<>();
 
     public Stats(){}
 
-    public Stats(int matchWon, int matchDrawn, int matchLost, int goalsFor, int goalsAgainst, Club club, League league) throws Exception{
-        if(exists(club,league))
+    public Stats(int matchWon, int matchDrawn, int matchLost, int goalsFor, int goalsAgainst, Club club, Season season) throws Exception{
+        if(exists(club, season))
             throw new Exception("Stats for this club and league already exist");
         this.matchWon = matchWon;
         this.matchDrawn = matchDrawn;
         this.matchLost = matchLost;
         this.goalsFor = goalsFor;
         this.goalsAgainst = goalsAgainst;
-        setLeague(league);
+        setSeason(season);
         setClub(club);
 
         extent.add(this);
@@ -100,17 +100,17 @@ public class Stats {
     }
 
     @ManyToOne
-    public League getLeague() {
-        return league;
+    public Season getSeason() {
+        return season;
     }
 
-    public void setLeague(League league) {
-        this.league = league;
+    public void setSeason(Season season) {
+        this.season = season;
     }
 
-    private boolean exists(Club club, League league){
+    private boolean exists(Club club, Season season){
         for(Stats stats : extent)
-            if(stats.club == club && stats.league == league)
+            if(stats.club == club && stats.season == season)
                 return true;
         return false;
     }
@@ -125,7 +125,6 @@ public class Stats {
                 ", goalsFor=" + goalsFor +
                 ", goalsAgainst=" + goalsAgainst +
                 ", club=" + club.getName() +
-                ", league=" + league.getName() +
                 '}';
     }
 }
