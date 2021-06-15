@@ -34,27 +34,37 @@ public class DbConnectionController {
             sessionFactory.close();
     }
     public static void prepareExampleData(){
-        Supporter supporter1 = new Supporter("Jan", "Kibic", true);
-        Supporter supporter2 = new Supporter("Maciek", "Los", false);
-        Supporter supporter3 = new Supporter("Marek", "Tu", false);
-        Supporter supporter4 = new Supporter("Jakub", "Trzy", false);
-
-        Dietician dietician1 = new Dietician("Marek", "Dieta", 3333, LocalDate.now());
-        Dietician dietician2 = new Dietician("Marcin", "Banan", 5000, LocalDate.now());
-
+        Person person1 = new Person("Jan", "Kibic");
+        Person person2 = new Person("Maciek", "Los");
+        Person person3 = new Person("Marek", "Supp");
+        Person person4 = new Person("Jakub", "Trener");
+        Person person5 = new Person("Marek", "Dieta");
+        Person person6 = new Person("Cristiano", "Ronaldo");
+        Person person7 = new Person("Robert", "Lewandowski");
+        Person person8 = new Person("Wojciech", "Szczęsny");
+        Person person9 = new Person("Jan", "Bednarek");
+        Person person10 = new Person("Kamil", "Glik");
+        Supporter supporter1 = null, supporter2 = null, supporter3 = null, supporter4 = null;
+        Dietician dietician1 = null, dietician2 = null;
         Footballer footballer1 = null, footballer2 = null, footballer3 = null, footballer4 = null, footballer5 = null;
-        try {
-            footballer1 = new Footballer("Cristiano", "Ronaldo", 40000, LocalDate.now(), "Striker", 7);
-            footballer2 = new Footballer("Robert", "Lewandowski", 30000, LocalDate.now(), "Striker", 9);
-            footballer3 = new Footballer("Wojciech", "Szczęsny", 17000, LocalDate.now(), "GoalKeeper", 1);
-            footballer4 = new Footballer("Jan", "Bednarek", 12000, LocalDate.now(), "Defender", 5);
-            footballer5 = new Footballer("Kamil", "Glik", 18000, LocalDate.now(), "Defender", 4);
-        }catch (Exception e){
+        Coach coach1 = null, coach2 = null;
+        try{
+            supporter1 = Supporter.createSupporter(person1, true);
+            supporter2 = Supporter.createSupporter(person2, false);
+            supporter3 = Supporter.createSupporter(person3, false);
+            supporter4 = Supporter.createSupporter(person4, true);
+            dietician1 = Dietician.createDietician(person5, 3333, LocalDate.now());
+            dietician2 = Dietician.createDietician(person2, 5000, LocalDate.now());
+            footballer1 = Footballer.createFootballer(person6, 40000, LocalDate.now(), "Striker", 7);
+            footballer2 = Footballer.createFootballer(person7, 30000, LocalDate.now(), "Striker", 9);
+            footballer3 = Footballer.createFootballer(person8, 17000, LocalDate.now(), "GoalKeeper", 1);
+            footballer4 = Footballer.createFootballer(person9, 12000, LocalDate.now(), "Defender", 5);
+            footballer5 = Footballer.createFootballer(person10, 18000, LocalDate.now(), "Defender", 4);
+            coach1 = Coach.createCoach(person4, 10000, LocalDate.now(), CoachRole.MAIN_COACH);
+            coach2 = Coach.createCoach(person3, 2000, LocalDate.now(), CoachRole.COACH_ASSISTANT);
+        } catch(Exception e){
             System.out.println(e.getMessage());
         }
-
-        Coach coach1 = new Coach("Paweł", "Trener", 10000, LocalDate.now(), CoachRole.MAIN_COACH);
-        Coach coach2 = new Coach("Jerzy", "Brzęczek", 2000, LocalDate.now(), CoachRole.COACH_ASSISTANT);
 
         Pitch pitch1 = new Pitch(400, "Stawowa 12");
         Pitch pitch2 = new Pitch(600, "Treningowa 12");
@@ -117,6 +127,16 @@ public class DbConnectionController {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 
+            session.save(person1);
+            session.save(person2);
+            session.save(person3);
+            session.save(person4);
+            session.save(person5);
+            session.save(person6);
+            session.save(person7);
+            session.save(person8);
+            session.save(person9);
+            session.save(person10);
             session.save(supporter1);
             session.save(supporter3);
             session.save(supporter4);

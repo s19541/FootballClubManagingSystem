@@ -16,23 +16,36 @@ public class Main {
         StandardServiceRegistry registry = null;
         SessionFactory sessionFactory = null;
 
-        Worker worker1 = new Worker("Marcin", "Nowak", 4321, LocalDate.now());
-        Worker worker2 = new Worker("Marcel", "Kowal", 6321, LocalDate.now());
 
-        Supporter supporter1 = new Supporter("Jan", "Kibic", true);
-        Supporter supporter2 = new Supporter("Maciek", "Los", false);
 
-        Dietician dietician = new Dietician("Marek", "Dieta", 3333, LocalDate.now());
-
-        Footballer footballer1 = null, footballer2 = null;
+        Person person1 = new Person("Jan", "Kibic");
+        Person person2 = new Person("Marcel", "Kowal");
+        Person person3 = new Person("Marcin", "Nowak");
+        Person person4 = new Person("Marcel", "Kowal");
+        Person person5 = new Person("Cristiano", "Ronaldo");
+        Person person6 = new Person("Robert", "Lewandowski");
+        Supporter supporter1 = null, supporter2 = null;
         try {
-            footballer1 = new Footballer("Cristiano", "Ronaldo", 40000, LocalDate.now(), "Striker", 7);
-            footballer2 = new Footballer("Robert", "Lewandowski", 30000, LocalDate.now(), "Striker", 9);
-        }catch (Exception e){
+            supporter1 = Supporter.createSupporter(person1, true);
+            supporter2 = Supporter.createSupporter(person2, false);
+        }catch(Exception e){
             System.out.println(e.getMessage());
         }
 
-        Coach coach1 = new Coach("Paweł", "Trener", 10000, LocalDate.now(), CoachRole.MAIN_COACH);
+
+        Footballer footballer1 = null, footballer2 = null;
+        Worker worker1 = null;
+        Coach coach1 = null;
+        Dietician dietician1 = null;
+        try {
+            worker1 = Worker.createWorker(person2 , 4321, LocalDate.now());
+            dietician1 = Dietician.createDietician(person3, 3333, LocalDate.now());
+            coach1 = Coach.createCoach(person4, 10000, LocalDate.now(), CoachRole.MAIN_COACH);
+            footballer1 = Footballer.createFootballer(person5, 50000, LocalDate.now(), "Striker", 7);
+            footballer2 = Footballer.createFootballer(person6, 30000, LocalDate.now(), "Striker", 9);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
         Pitch pitch1 = new Pitch(400, "Stawowa 12");
 
@@ -47,8 +60,8 @@ public class Main {
             System.out.println(e.getMessage());
         }
 
-        footballer1.addDietician(dietician);
-        dietician.addFootballer(footballer2);
+        footballer1.addDietician(dietician1);
+        dietician1.addFootballer(footballer2);
 
         Season season1 = new Season(LocalDate.of(2020, 12 ,1 ), LocalDate.of(2021, 12 , 1));
 
@@ -73,11 +86,16 @@ public class Main {
             Session session = sessionFactory.openSession();
             session.beginTransaction();
 
+            session.save(person1);
+            session.save(person2);
+            session.save(person3);
+            session.save(person4);
+            session.save(person5);
+            session.save(person6);
             session.save(worker1);
-            session.save(worker2);
             session.save(supporter1);
             session.save(supporter2);
-            session.save(dietician);
+            session.save(dietician1);
             session.save(coach1);
             session.save(footballer1);
             session.save(footballer2);
@@ -91,6 +109,10 @@ public class Main {
             List<Person> personsFromDb = session.createQuery("from Person").list();
             for ( var person : personsFromDb) {
                 System.out.println(person);
+            }
+            List<Supporter> supportersFromDb = session.createQuery("from Supporter").list();
+            for ( var supporter : supportersFromDb) {
+                System.out.println(supporter);
             }
             List<Club> clubsFromDb = session.createQuery("from Club").list();
             for ( var club : clubsFromDb) {

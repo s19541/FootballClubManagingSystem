@@ -1,24 +1,34 @@
 package Models;
 
-import javax.persistence.Basic;
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity(name = "Worker")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Worker extends Person {
+public class Worker{
     private int salary;
     private LocalDate employmentDate;
+    private Person person;
+    private long id;
 
     public Worker() {}
 
-    public Worker(String firstName, String lastName, int salary, LocalDate employmentDate){
-        super(firstName,lastName);
+    protected Worker(Person person, int salary, LocalDate employmentDate){
+        this.person = person;
         this.salary = salary;
         this.employmentDate = employmentDate;
     }
+
+    @Id
+    @GeneratedValue(generator="increment")
+    @GenericGenerator(name="increment", strategy = "increment")
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id){this.id = id;}
 
     @Basic
     public int getSalary() {
@@ -36,5 +46,23 @@ public class Worker extends Person {
 
     public void setEmploymentDate(LocalDate employmentDate) {
         this.employmentDate = employmentDate;
+    }
+
+    @OneToOne
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    @Transient
+    public static Worker createWorker(Person person, int salary, LocalDate employmentDate) throws Exception{
+        if(person == null)
+            throw new Exception("The given person does not exist!");
+        Worker newWorker = new Worker(person, salary, employmentDate);
+        person.setWorker(newWorker);
+        return  newWorker;
     }
 }

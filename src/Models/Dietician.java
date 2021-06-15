@@ -12,8 +12,8 @@ public class Dietician extends Worker{
 
     public Dietician(){ }
 
-    public Dietician(String firstName, String lastName, int salary, LocalDate employmentDate){
-        super(firstName, lastName, salary, employmentDate);
+    private Dietician(Person person, int salary, LocalDate employmentDate){
+        super(person, salary, employmentDate);
     }
     @ManyToMany(cascade = { CascadeType.ALL })
     @JoinTable(
@@ -38,6 +38,14 @@ public class Dietician extends Worker{
     public void removeFootballer(Footballer footballer) {
         getFootballers().remove(footballer);
         footballer.getDieticians().remove(this);
+    }
+
+    public static Dietician createDietician(Person person, int salary, LocalDate employmentDate) throws Exception{
+        if(person == null)
+            throw new Exception("The given person does not exist!");
+        Dietician newDietician = new Dietician(person, salary, employmentDate);
+        person.setWorker(newDietician);
+        return  newDietician;
     }
 
     @Override

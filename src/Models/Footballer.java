@@ -17,10 +17,10 @@ public class Footballer extends Worker {
 
     public Footballer(){}
 
-    public Footballer(String firstName, String lastName, int salary, LocalDate employmentDate, String position, int jerseyNumber) throws Exception{
-        super(firstName, lastName, salary, employmentDate);
+    private Footballer(Person person, int salary, LocalDate employmentDate, String position, int jerseyNumber){
+        super(person, salary, employmentDate);
         this.position = position;
-        setJerseyNumber(jerseyNumber);
+        this.jerseyNumber = jerseyNumber;
     }
 
     @Basic
@@ -37,9 +37,7 @@ public class Footballer extends Worker {
         return jerseyNumber;
     }
 
-    public void setJerseyNumber(int jerseyNumber) throws Exception{
-        if(jerseyNumber < 1 || jerseyNumber > 99)
-            throw new Exception("Jersey number should be in range: 1-99");
+    public void setJerseyNumber(int jerseyNumber){
         this.jerseyNumber = jerseyNumber;
     }
 
@@ -110,8 +108,18 @@ public class Footballer extends Worker {
         match.getFootballers().remove(this);
     }
 
+    public static Footballer createFootballer(Person person, int salary, LocalDate employmentDate, String position, int jerseyNumber) throws Exception{
+        if(person == null)
+            throw new Exception("The given person does not exist!");
+        if(jerseyNumber < 1 || jerseyNumber > 99)
+            throw new Exception("Jersey number should be in range: 1-99");
+        Footballer newFootballer = new Footballer(person, salary, employmentDate, position, jerseyNumber);
+        person.setWorker(newFootballer);
+        return newFootballer;
+    }
+
     @Override
     public String toString() {
-        return getFirstName() + " " + getLastName() + " " + getPosition();
+        return getPerson().getFirstName() + " " + getPerson().getLastName() + " " + getPosition();
     }
 }

@@ -5,11 +5,12 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity(name = "Person")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Person {
     private long id;
     private String firstName;
     private String lastName;
+    private Supporter supporter;
+    private Worker worker;
 
     public Person(){}
 
@@ -43,6 +44,24 @@ public class Person {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @OneToOne
+    public Supporter getSupporter(){
+        return supporter;
+    }
+
+    public void setSupporter(Supporter supporter) {
+        this.supporter = supporter;
+    }
+
+    @OneToOne
+    public Worker getWorker() {
+        return worker;
+    }
+
+    public void setWorker(Worker worker) {
+        this.worker = worker;
     }
 
     @Transient

@@ -17,8 +17,8 @@ public class Coach extends Worker{
 
     public Coach(){}
 
-    public Coach(String firstName, String lastName, int salary, LocalDate employmentDate, CoachRole coachRole){
-        super(firstName,lastName,salary,employmentDate);
+    public Coach(Person person, int salary, LocalDate employmentDate, CoachRole coachRole){
+        super(person, salary, employmentDate);
         this.coachRole = coachRole;
     }
     @Enumerated
@@ -49,5 +49,13 @@ public class Coach extends Worker{
     public void removeTraining(Training training) {
         getTrainings().remove(training);
         training.getCoaches().remove(this);
+    }
+
+    public static Coach createCoach(Person person, int salary, LocalDate employmentDate, CoachRole coachRole) throws Exception{
+        if(person == null)
+            throw new Exception("The given person does not exist!");
+        Coach newCoach = new Coach(person, salary, employmentDate, coachRole);
+        person.setWorker(newCoach);
+        return newCoach;
     }
 }
