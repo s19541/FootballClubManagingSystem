@@ -95,15 +95,17 @@ public class Footballer extends Worker {
     }
 
     public void addMatch(Match match) throws Exception{
-        if(match.getFootballers().size() >= Match.maxFootballersNumberOnMatch)
-            throw new Exception("Too much footballers on match (maximum number is: " + Match.maxFootballersNumberOnMatch + ")");
+        if(match.getFootballers().size() >= 20)
+            throw new Exception("Too much footballers on match (maximum number is: 20)");
         if(!matches.contains(match)) {
             getMatches().add(match);
             match.getFootballers().add(this);
         }
     }
 
-    public void removeMatch(Match match) {
+    public void removeMatch(Match match) throws Exception{
+        if(match.getFootballers().size() <= 14)
+            throw new Exception("Squad must have at least 14 footballers");
         getMatches().remove(match);
         match.getFootballers().remove(this);
     }

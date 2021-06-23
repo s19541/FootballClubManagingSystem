@@ -67,7 +67,7 @@ public class Main {
 
         Club club1 = new Club("Real Madrid");
 
-        Match match1 = new Match(LocalDateTime.now(), club1,3, 3);
+        Match match1 = new Match(LocalDateTime.now(), 20, club1,3, 3);
 
         try {
             //club1.addLeague(league1, 3, 2, 3, 4, 4);

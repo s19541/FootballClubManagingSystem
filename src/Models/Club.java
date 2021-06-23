@@ -90,11 +90,6 @@ public class Club {
 
     @Override
     public String toString() {
-        return "Club{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", matches=" + matches +
-                ", statsList=" + statsList +
-                '}';
+        return getName();
     }
 }

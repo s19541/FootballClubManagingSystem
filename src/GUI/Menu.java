@@ -29,6 +29,18 @@ public class Menu {
                 frame.pack();
             }
         });
+        ActionListener notAvailableActionListner= new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(frame,
+                        "This feature isn't available yet!",
+                        "INFORMATION",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        };
+        personsButton.addActionListener(notAvailableActionListner);
+        trainingsButton.addActionListener(notAvailableActionListner);
+        leagueButton.addActionListener(notAvailableActionListner);
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent winEvt) {
                 DbConnectionController.stopConnectionWithDb();
@@ -42,6 +54,7 @@ public class Menu {
         DbConnectionController.prepareExampleData();
         frame = new JFrame("Menu");
         frame.setContentPane(new Menu().panelMain);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

@@ -15,12 +15,13 @@ public class UpcomingMatches {
     private JList matchScheduleJList;
     private JButton buttonReturn;
     private JButton buttonShowFinished;
+    private JButton buttonAdd;
     private static JFrame frame;
     private List<Match> upcomingMatches;
 
     public UpcomingMatches(JFrame frame){
         this.frame = frame;
-        frame.setTitle("match schedule");
+        frame.setTitle("Match schedule");
         upcomingMatches = MatchController.getMatchSchedule();
         DefaultListModel<Match> matchScheduleListModel = new DefaultListModel<>();
         for(Match match : upcomingMatches){
@@ -38,7 +39,7 @@ public class UpcomingMatches {
         buttonShowFinished.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new FinishedMatches(frame).getPanelFinishedMatches());
+                frame.setContentPane(new StartedMatches(frame).getPanelFinishedMatches());
                 frame.pack();
             }
         });
@@ -51,6 +52,13 @@ public class UpcomingMatches {
                     frame.setContentPane(new MatchSquad(frame, upcomingMatches.get(index)).getPanelMatchSquad());
                     frame.pack();
                 }
+            }
+        });
+        buttonAdd.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setContentPane(new AddMatch(frame).getPanelAddMatch());
+                frame.pack();
             }
         });
     }

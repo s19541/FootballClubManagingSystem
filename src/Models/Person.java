@@ -1,5 +1,6 @@
 package Models;
 
+import Controllers.PersonController;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -61,6 +62,8 @@ public class Person {
     }
 
     public void setWorker(Worker worker) {
+        if(this.worker != null)
+            PersonController.deleteWorkerFromDb(worker);
         this.worker = worker;
     }
 
