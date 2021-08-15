@@ -13,7 +13,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
 
-        StandardServiceRegistry registry = null;
+        /*StandardServiceRegistry registry = null;
         SessionFactory sessionFactory = null;
 
 
@@ -131,6 +131,6 @@ public class Main {
             if (sessionFactory != null) {
                 sessionFactory.close();
             }
-        }
+        }*/
     }
 }
