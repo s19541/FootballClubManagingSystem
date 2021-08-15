@@ -1,7 +1,7 @@
 package Controllers;
 
 import Enums.CoachRole;
-import Models.*;
+import Model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -11,6 +11,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DbConnectionController {
     public static StandardServiceRegistry registry = null;
@@ -75,6 +77,7 @@ public class DbConnectionController {
                 footballer11 = null, footballer12 = null, footballer13 = null, footballer14 = null, footballer15 = null,
                 footballer16 = null, footballer17 = null, footballer18 = null, footballer19 = null, footballer20 = null,
                 footballer21 = null, footballer22 = null, footballer23 = null, footballer24 = null, footballer25 = null;
+        List<Footballer>footballers = new ArrayList<>();
         Coach coach1 = null, coach2 = null;
         try{
             supporter1 = Supporter.createSupporter(person1, true);
@@ -176,8 +179,8 @@ public class DbConnectionController {
         Club club4 = new Club("Liverpool Fc");
 
         Match match1 = new Match(LocalDateTime.of(2021, Month.MAY, 8, 20, 30), 22, club1,3, 3);
-        Match match2 = new Match(LocalDateTime.of(2021, Month.JULY, 10, 20, 30), 33, club2);
-        Match match3 = new Match(LocalDateTime.of(2021, Month.JULY, 12, 20, 30), 44, club3);
+        Match match2 = new Match(LocalDateTime.of(2021, Month.NOVEMBER, 10, 20, 30), 33, club2);
+        Match match3 = new Match(LocalDateTime.of(2021, Month.OCTOBER, 12, 20, 30), 44, club3);
         Match match4 = new Match(LocalDateTime.of(2021, Month.MAY, 10, 20, 30), 50, club4,4, 3);
         Match match5 = new Match(LocalDateTime.now(), 20, club1);
 

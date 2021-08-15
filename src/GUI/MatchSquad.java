@@ -1,8 +1,8 @@
 package GUI;
 
 import Controllers.MatchController;
-import Models.Footballer;
-import Models.Match;
+import Model.Footballer;
+import Model.Match;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -21,7 +21,7 @@ public class MatchSquad {
         this.frame = frame;
         frame.setTitle("Match squad vs " + match.getClub().getName());
         DefaultListModel<Footballer> footballerListModel = new DefaultListModel<>();
-        for(Footballer footballer : MatchController.getMatchSquad(match)){
+        for(Footballer footballer : match.getFootballers()){
             footballerListModel.addElement(footballer);
         }
         matchSquadJList.setModel(footballerListModel);

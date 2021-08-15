@@ -1,8 +1,8 @@
 package GUI;
 
 import Controllers.MatchController;
-import Models.Footballer;
-import Models.Match;
+import Model.Footballer;
+import Model.Match;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

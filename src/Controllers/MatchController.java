@@ -1,8 +1,8 @@
 package Controllers;
 
-import Models.Club;
-import Models.Footballer;
-import Models.Match;
+import Model.Club;
+import Model.Footballer;
+import Model.Match;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

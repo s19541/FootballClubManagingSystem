@@ -1,8 +1,7 @@
-package Models;
+package Model;
 
 import Enums.CoachRole;
 
-import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;

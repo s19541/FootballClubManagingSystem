@@ -1,7 +1,7 @@
 package GUI;
 
 import Controllers.MatchController;
-import Models.Match;
+import Model.Match;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,4 +1,4 @@
-package Models;
+package Model;
 
 import Controllers.PersonController;
 import org.hibernate.annotations.GenericGenerator;
@@ -53,6 +53,8 @@ public class Person {
     }
 
     public void setSupporter(Supporter supporter) {
+        if(this.supporter != null)
+            PersonController.deleteSupporterFromDb(supporter);
         this.supporter = supporter;
     }
 
@@ -62,8 +64,8 @@ public class Person {
     }
 
     public void setWorker(Worker worker) {
-        if(this.worker != null)
-            PersonController.deleteWorkerFromDb(worker);
+        if(this.worker != null && worker != null)
+            PersonController.deleteWorkerFromDb(this.worker);
         this.worker = worker;
     }
 

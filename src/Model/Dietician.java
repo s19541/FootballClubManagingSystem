@@ -1,4 +1,4 @@
-package Models;
+package Model;
 
 import javax.persistence.*;
 import java.time.LocalDate;

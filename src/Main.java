@@ -1,5 +1,5 @@
 import Enums.CoachRole;
-import Models.*;
+import Model.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;

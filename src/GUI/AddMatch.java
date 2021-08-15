@@ -3,9 +3,9 @@ package GUI;
 
 
 import Controllers.MatchController;
-import Models.Club;
-import Models.Footballer;
-import Models.Match;
+import Model.Club;
+import Model.Footballer;
+import Model.Match;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.YearMonth;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -87,6 +86,7 @@ public class AddMatch {
             public void mouseClicked(MouseEvent e) {
                 JList list = (JList)e.getSource();
                 int index = list.locationToIndex(e.getPoint());
+                //TODO inaczej zrobic ten index (ewentualnie getSelectedIndex, ale nie jestem pewny (powinno byc w wykladach))
                 if(e.getClickCount() == 2){
                     int result = JOptionPane.showConfirmDialog(frame, "Are you sure to remove this footballer from squad?", "Confirm",
                             JOptionPane.YES_NO_OPTION,
@@ -95,8 +95,6 @@ public class AddMatch {
                         comboBoxFootballers.addItem(matchSquad.get(index));
                         footballerListModel.removeElement(matchSquad.get(index));
                         matchSquad.remove(index);
-                        //frame.setContentPane(new MatchSquad(frame, match).getPanelMatchSquad());
-                        //frame.pack();
                     }
                 }
 
