@@ -54,7 +54,7 @@ public class Menu {
         DbConnectionController.prepareExampleData();
         frame = new JFrame("Menu");
         frame.setContentPane(new Menu().panelMain);
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
