@@ -4,10 +4,9 @@ import Controllers.MatchController;
 import Model.Match;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class UpcomingMatches {
@@ -16,6 +15,8 @@ public class UpcomingMatches {
     private JButton buttonReturn;
     private JButton buttonShowFinished;
     private JButton buttonAdd;
+    private JButton buttonEditSquad;
+    private JPanel panelUpcomingMatchesInside;
     private static JFrame frame;
     private List<Match> upcomingMatches;
 
@@ -43,22 +44,27 @@ public class UpcomingMatches {
                 frame.pack();
             }
         });
-        matchScheduleJList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JList list = (JList)e.getSource();
-                int index = list.locationToIndex(e.getPoint());
-                if(e.getClickCount() == 2){
-                    frame.setContentPane(new MatchSquad(frame, upcomingMatches.get(index)).getPanelMatchSquad());
-                    frame.pack();
-                }
-            }
-        });
+
         buttonAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.setContentPane(new AddMatch(frame).getPanelAddMatch());
                 frame.pack();
+            }
+        });
+        buttonEditSquad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = matchScheduleJList.getSelectedIndex();
+                if (selectedIndex == -1) {
+                    JOptionPane.showMessageDialog(frame,
+                            "You didn't select any match to edit!",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    frame.setContentPane(new MatchSquad(frame, upcomingMatches.get(selectedIndex)).getPanelMatchSquad());
+                    frame.pack();
+                }
             }
         });
     }
@@ -67,4 +73,7 @@ public class UpcomingMatches {
         return panelUpcomingMatches;
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
 }

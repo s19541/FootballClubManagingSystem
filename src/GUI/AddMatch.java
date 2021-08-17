@@ -32,6 +32,8 @@ public class AddMatch {
     private JComboBox comboBoxYear;
     private JTextField textFieldHour;
     private JTextField textFieldMinute;
+    private JButton buttonRemoveFootballer;
+    private JPanel panelAddMatchInside;
 
     public AddMatch(JFrame frame) {
         frame.setTitle("Add match");
@@ -85,8 +87,7 @@ public class AddMatch {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JList list = (JList)e.getSource();
-                int index = list.locationToIndex(e.getPoint());
-                //TODO inaczej zrobic ten index (ewentualnie getSelectedIndex, ale nie jestem pewny (powinno byc w wykladach))
+                int index = matchSquadJList.getSelectedIndex();
                 if(e.getClickCount() == 2){
                     int result = JOptionPane.showConfirmDialog(frame, "Are you sure to remove this footballer from squad?", "Confirm",
                             JOptionPane.YES_NO_OPTION,
@@ -116,6 +117,22 @@ public class AddMatch {
                     matchSquad.add(footballer);
                     footballerListModel.addElement(footballer);
                     comboBoxFootballers.removeItem(footballer);
+                }
+            }
+        });
+        buttonRemoveFootballer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = matchSquadJList.getSelectedIndex();
+                if (selectedIndex == -1) {
+                    JOptionPane.showMessageDialog(frame,
+                            "You didn't select any footballer!",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                        comboBoxFootballers.addItem(matchSquad.get(selectedIndex));
+                        footballerListModel.removeElement(matchSquad.get(selectedIndex));
+                        matchSquad.remove(selectedIndex);
                 }
             }
         });

@@ -9,8 +9,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class MatchSquad {
     private JList matchSquadJList;
@@ -18,6 +16,7 @@ public class MatchSquad {
     private JButton buttonReturn;
     private JButton buttonAdd;
     private JButton buttonRemove;
+    private JPanel panelMatchSquadInside;
     private JFrame frame;
 
     public MatchSquad(JFrame frame, Match match) {
@@ -35,31 +34,6 @@ public class MatchSquad {
         }
         matchSquadJList.setModel(footballerListModel);
 
-       /* matchSquadJList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JList list = (JList)e.getSource();
-                int index = list.locationToIndex(e.getPoint());
-                if(e.getClickCount() == 2){
-                    if(match.getFootballers().size() <= 14){
-                        JOptionPane.showMessageDialog(frame,
-                                "Squad must have at least 14 footballers!",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                    }else {
-                        int result = JOptionPane.showConfirmDialog(frame, "Are you sure to remove this footballer from squad?", "Confirm",
-                                JOptionPane.YES_NO_OPTION,
-                                JOptionPane.QUESTION_MESSAGE);
-                        if (result == JOptionPane.YES_OPTION) {
-                            MatchController.removeFootballerFromSquad(match, match.getFootballers().get(index));
-                            frame.setContentPane(new MatchSquad(frame, match).getPanelMatchSquad());
-                            frame.pack();
-                        }
-                    }
-                }
-
-            }
-        });*/
         buttonReturn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

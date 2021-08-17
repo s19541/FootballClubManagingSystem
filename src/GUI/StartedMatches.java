@@ -7,14 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class StartedMatches {
     private JList finishedMatchesJList;
     private JPanel panelFinishedMatches;
     private JButton buttonReturn;
+    private JButton buttonEdit;
+    private JPanel panelStartedMatchesInside;
     private JFrame frame;
     private List<Match> finishedMatches;
 
@@ -34,6 +34,23 @@ public class StartedMatches {
                 frame.pack();
             }
         });
+
+        buttonEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedIndex = finishedMatchesJList.getSelectedIndex();
+                if (selectedIndex == -1) {
+                    JOptionPane.showMessageDialog(frame,
+                            "You didn't select any match to edit!",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                } else {
+                    frame.setContentPane(new UpdateResult(frame, finishedMatches.get(selectedIndex)).getPanelUpdateResult());
+                    frame.pack();
+                }
+            }
+        });
+
         finishedMatchesJList.setCellRenderer(new DefaultListCellRenderer() {
 
             @Override
@@ -49,17 +66,8 @@ public class StartedMatches {
             }
 
         });
-        finishedMatchesJList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                JList list = (JList)e.getSource();
-                int index = list.locationToIndex(e.getPoint());
-                if(e.getClickCount() == 2){
-                    frame.setContentPane(new UpdateResult(frame, finishedMatches.get(index)).getPanelUpdateResult());
-                    frame.pack();
-                }
-            }
-        });
+
+
     }
 
     public JPanel getPanelFinishedMatches() {

@@ -29,7 +29,7 @@ public class Menu {
                 frame.pack();
             }
         });
-        ActionListener notAvailableActionListner= new ActionListener() {
+        ActionListener notAvailableActionListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(frame,
@@ -38,9 +38,9 @@ public class Menu {
                         JOptionPane.INFORMATION_MESSAGE);
             }
         };
-        personsButton.addActionListener(notAvailableActionListner);
-        trainingsButton.addActionListener(notAvailableActionListner);
-        leagueButton.addActionListener(notAvailableActionListner);
+        personsButton.addActionListener(notAvailableActionListener);
+        trainingsButton.addActionListener(notAvailableActionListener);
+        leagueButton.addActionListener(notAvailableActionListener);
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(WindowEvent winEvt) {
                 DbConnectionController.stopConnectionWithDb();

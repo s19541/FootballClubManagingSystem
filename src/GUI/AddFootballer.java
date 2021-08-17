@@ -14,7 +14,7 @@ public class AddFootballer {
     private JList addFootballerJList;
     private JPanel panelAddFootballer;
     private JButton buttonAdd;
-    private JButton buttonReturnl;
+    private JButton buttonReturn;
     private JFrame frame;
 
     public AddFootballer(JFrame frame, Match match) {
@@ -35,7 +35,7 @@ public class AddFootballer {
                     frame.pack();
             }
         });
-        buttonReturnl.addActionListener(new ActionListener() {
+        buttonReturn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                     frame.setContentPane(new MatchSquad(frame, match).getPanelMatchSquad());
