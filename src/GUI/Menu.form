@@ -10,7 +10,9 @@
     <children>
       <component id="3a27e" class="javax.swing.JButton" binding="personsButton" default-binding="true">
         <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+            <minimum-size width="200" height="-1"/>
+          </grid>
         </constraints>
         <properties>
           <text value="Persons"/>

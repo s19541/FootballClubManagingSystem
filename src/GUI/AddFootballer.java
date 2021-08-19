@@ -15,36 +15,48 @@ public class AddFootballer {
     private JPanel panelAddFootballer;
     private JButton buttonAdd;
     private JButton buttonReturn;
-    private JFrame frame;
+    private JPanel panelAddFootballerInside;
+    private List<Footballer> footballers;
+    private Match match;
 
-    public AddFootballer(JFrame frame, Match match) {
-        this.frame = frame;
-        frame.setTitle("Add player to squad vs " + match.getClub().getName());
+    public AddFootballer(Match match) {
+        this.match = match;
+        GuiMethods.changeTitle("Add player to squad vs " + match.getClub().getName());
+
         DefaultListModel<Footballer> footballerListModel = new DefaultListModel<>();
-        List<Footballer> footballers = new ArrayList<>();
+        footballers = new ArrayList<>();
         for(Footballer footballer : MatchController.getFootballersOutOfSquad(match)){
             footballers.add(footballer);
             footballerListModel.addElement(footballer);
         }
         addFootballerJList.setModel(footballerListModel);
+
         buttonAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    MatchController.addFootballerToSquad(match, footballers.get(addFootballerJList.getSelectedIndex()));
-                    frame.setContentPane(new MatchSquad(frame, match).getPanelMatchSquad());
-                    frame.pack();
+                    buttonAddActionPerformed(e);
             }
         });
+
         buttonReturn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    frame.setContentPane(new MatchSquad(frame, match).getPanelMatchSquad());
-                    frame.pack();
+                    buttonReturnActionPerformed(e);
             }
         });
+
     }
 
     public JPanel getPanelAddFootballer() {
         return panelAddFootballer;
+    }
+
+    private void buttonAddActionPerformed(ActionEvent e){
+        MatchController.addFootballerToSquad(match, footballers.get(addFootballerJList.getSelectedIndex()));
+        GuiMethods.setPanel(new MatchSquad(match).getPanelMatchSquad());
+    }
+
+    private void buttonReturnActionPerformed(ActionEvent e){
+        GuiMethods.setPanel(new MatchSquad(match).getPanelMatchSquad());
     }
 }

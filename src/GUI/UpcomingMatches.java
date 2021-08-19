@@ -17,12 +17,11 @@ public class UpcomingMatches {
     private JButton buttonAdd;
     private JButton buttonEditSquad;
     private JPanel panelUpcomingMatchesInside;
-    private static JFrame frame;
     private List<Match> upcomingMatches;
 
-    public UpcomingMatches(JFrame frame){
-        this.frame = frame;
-        frame.setTitle("Match schedule");
+    public UpcomingMatches(){
+        GuiMethods.changeTitle("Match schedule");
+
         upcomingMatches = MatchController.getMatchSchedule();
         DefaultListModel<Match> matchScheduleListModel = new DefaultListModel<>();
         for(Match match : upcomingMatches){
@@ -33,47 +32,60 @@ public class UpcomingMatches {
         buttonReturn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new Menu().getPanelMain());
-                frame.pack();
+                buttonReturnActionPerformed(e);
             }
         });
+
         buttonShowFinished.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new StartedMatches(frame).getPanelFinishedMatches());
-                frame.pack();
+                buttonShowFinishedActionPerformed(e);
             }
         });
 
         buttonAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new AddMatch(frame).getPanelAddMatch());
-                frame.pack();
+                buttonAddActionPerformed(e);
             }
         });
+
         buttonEditSquad.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedIndex = matchScheduleJList.getSelectedIndex();
-                if (selectedIndex == -1) {
-                    JOptionPane.showMessageDialog(frame,
-                            "You didn't select any match to edit!",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
-                    frame.setContentPane(new MatchSquad(frame, upcomingMatches.get(selectedIndex)).getPanelMatchSquad());
-                    frame.pack();
-                }
+               buttonEditSquadActionPerformed(e);
             }
         });
+
     }
 
     public JPanel getPanelUpcomingMatches() {
         return panelUpcomingMatches;
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
+    private void buttonReturnActionPerformed(ActionEvent e){
+        GuiMethods.setPanel(new Menu().getPanelMain());
     }
+
+    private void buttonShowFinishedActionPerformed(ActionEvent e){
+        GuiMethods.setPanel(new StartedMatches().getPanelFinishedMatches());
+    }
+
+    private void buttonAddActionPerformed(ActionEvent e){
+        GuiMethods.setPanel(new AddMatch().getPanelAddMatch());
+    }
+
+    private void buttonEditSquadActionPerformed(ActionEvent e){
+        int selectedIndex = matchScheduleJList.getSelectedIndex();
+        if (selectedIndex == -1) {
+            JOptionPane.showMessageDialog(panelUpcomingMatches.getParent(),
+                    "You didn't select any match to edit!",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            GuiMethods.setPanel(new MatchSquad(upcomingMatches.get(selectedIndex)).getPanelMatchSquad());
+        }
+    }
+
+
 }

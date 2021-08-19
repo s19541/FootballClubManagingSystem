@@ -35,8 +35,9 @@ public class AddMatch {
     private JButton buttonRemoveFootballer;
     private JPanel panelAddMatchInside;
 
-    public AddMatch(JFrame frame) {
-        frame.setTitle("Add match");
+    //TODO ogarnąc tą klasę
+    public AddMatch() {
+        GuiMethods.changeTitle("Add match");
         List<Footballer> matchSquad = new ArrayList<>();
         DefaultListModel<Footballer> footballerListModel = new DefaultListModel<>();
         for(Footballer footballer : matchSquad){
@@ -89,7 +90,7 @@ public class AddMatch {
                 JList list = (JList)e.getSource();
                 int index = matchSquadJList.getSelectedIndex();
                 if(e.getClickCount() == 2){
-                    int result = JOptionPane.showConfirmDialog(frame, "Are you sure to remove this footballer from squad?", "Confirm",
+                    int result = JOptionPane.showConfirmDialog(panelAddMatch.getParent(), "Are you sure to remove this footballer from squad?", "Confirm",
                             JOptionPane.YES_NO_OPTION,
                             JOptionPane.QUESTION_MESSAGE);
                     if (result == JOptionPane.YES_OPTION) {
@@ -105,8 +106,7 @@ public class AddMatch {
         buttonAddMatch.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new UpcomingMatches(frame).getPanelUpcomingMatches());
-                frame.pack();
+                GuiMethods.setPanel(new UpcomingMatches().getPanelUpcomingMatches());
             }
         });
         buttonAddFootballer.addActionListener(new ActionListener() {
@@ -125,7 +125,7 @@ public class AddMatch {
             public void actionPerformed(ActionEvent e) {
                 int selectedIndex = matchSquadJList.getSelectedIndex();
                 if (selectedIndex == -1) {
-                    JOptionPane.showMessageDialog(frame,
+                    JOptionPane.showMessageDialog(panelAddMatch.getParent(),
                             "You didn't select any footballer!",
                             "Error",
                             JOptionPane.ERROR_MESSAGE);
@@ -154,18 +154,17 @@ public class AddMatch {
                     Match newMatch = new Match(LocalDateTime.of((int)comboBoxYear.getSelectedItem(),(Month)comboBoxMonth.getSelectedItem(),(int)comboBoxDay.getSelectedItem(), Integer.parseInt(textFieldHour.getText()), Integer.parseInt(textFieldMinute.getText())), Integer.parseInt(textFieldTicketPrize.getText()), (Club)comboBoxOpponent.getSelectedItem());
                     newMatch.setFootballers(matchSquad);
                     MatchController.addMatch(newMatch);
-                    frame.setContentPane(new UpcomingMatches(frame).getPanelUpcomingMatches());
-                    frame.pack();
+                    GuiMethods.setPanel(new UpcomingMatches().getPanelUpcomingMatches());
                 }
                 catch(Exception exception){
                     System.out.println(exception.getMessage());
                     if(exception.getMessage().equals("For input string: \"\""))
-                        JOptionPane.showMessageDialog(frame,
+                        JOptionPane.showMessageDialog(panelAddMatch.getParent(),
                                 "You have to fill all text fields",
                                 "Error",
                                 JOptionPane.ERROR_MESSAGE);
                     else
-                        JOptionPane.showMessageDialog(frame,
+                        JOptionPane.showMessageDialog(panelAddMatch.getParent(),
                                 exception.getMessage(),
                                 "Error",
                                 JOptionPane.ERROR_MESSAGE);

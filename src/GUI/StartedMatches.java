@@ -15,39 +15,29 @@ public class StartedMatches {
     private JButton buttonReturn;
     private JButton buttonEdit;
     private JPanel panelStartedMatchesInside;
-    private JFrame frame;
     private List<Match> finishedMatches;
 
-    public StartedMatches(JFrame frame) {
-        this.frame = frame;
-        frame.setTitle("Started Matches");
+    public StartedMatches() {
+        GuiMethods.changeTitle("Started Matches");
+
         finishedMatches = MatchController.getFinishedMatches();
         DefaultListModel<Match> finishedMatchesListModel = new DefaultListModel<>();
         for(Match match : finishedMatches){
             finishedMatchesListModel.addElement(match);
         }
         finishedMatchesJList.setModel(finishedMatchesListModel);
+
         buttonReturn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setContentPane(new UpcomingMatches(frame).getPanelUpcomingMatches());
-                frame.pack();
+                buttonReturnActionPerformed(e);
             }
         });
 
         buttonEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedIndex = finishedMatchesJList.getSelectedIndex();
-                if (selectedIndex == -1) {
-                    JOptionPane.showMessageDialog(frame,
-                            "You didn't select any match to edit!",
-                            "Error",
-                            JOptionPane.ERROR_MESSAGE);
-                } else {
-                    frame.setContentPane(new UpdateResult(frame, finishedMatches.get(selectedIndex)).getPanelUpdateResult());
-                    frame.pack();
-                }
+                buttonEditActionPerformed(e);
             }
         });
 
@@ -84,5 +74,21 @@ public class StartedMatches {
             color = Color.YELLOW;
         }
         return color;
+    }
+
+    private void buttonReturnActionPerformed(ActionEvent e){
+        GuiMethods.setPanel(new UpcomingMatches().getPanelUpcomingMatches());
+    }
+
+    private void buttonEditActionPerformed(ActionEvent e){
+        int selectedIndex = finishedMatchesJList.getSelectedIndex();
+        if (selectedIndex == -1) {
+            JOptionPane.showMessageDialog(panelFinishedMatches.getParent(),
+                    "You didn't select any match to edit!",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } else {
+            GuiMethods.setPanel((new UpdateResult(finishedMatches.get(selectedIndex)).getPanelUpdateResult()));
+        }
     }
 }
