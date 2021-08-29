@@ -33,12 +33,14 @@ public class DbConnectionController {
             StandardServiceRegistryBuilder.destroy(registry);
         }
     }
+
     public static void stopConnectionWithDb(){
         if (sessionFactory != null) {
             sessionFactory.close();
             session.close();
         }
     }
+
     public static void prepareExampleData(){
         Person person1 = new Person("Jan", "Kibic");
         Person person2 = new Person("Maciek", "Los");

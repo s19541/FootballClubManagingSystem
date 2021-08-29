@@ -1,9 +1,7 @@
 package Controllers;
 
-import Model.Club;
 import Model.Footballer;
 import Model.Match;
-import Model.Person;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,6 +28,7 @@ public class MatchController {
     public static List<Match> getFinishedMatches(){
         return getMatches().stream().filter(x -> x.isFinished() || x.isRunning()).collect(Collectors.toList());
     }
+
     public static void addMatch(Match match){
         try{
             DbConnectionController.session.beginTransaction();
@@ -47,19 +46,6 @@ public class MatchController {
         }catch(Exception e){
             e.printStackTrace();
         }
-    }
-    public static List<Footballer> getMatchSquad(Match match){
-        List<Footballer> matchSquad = new ArrayList<>();
-        try{
-            DbConnectionController.session.beginTransaction();
-            List<Match> matchesFromDb = DbConnectionController.session.createQuery("from Match where id = " + match.getId()).list();
-            matchSquad = matchesFromDb.get(0).getFootballers();
-            System.out.println(matchSquad);
-            DbConnectionController.session.getTransaction().commit();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return matchSquad;
     }
 
     public static void removeFootballerFromSquad(Match match, Footballer footballer){
