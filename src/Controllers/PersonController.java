@@ -2,7 +2,11 @@ package Controllers;
 
 import Model.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PersonController {
+
     public static void deleteWorkerFromDb(Worker worker){
         try{
             DbConnectionController.session.beginTransaction();
@@ -26,6 +30,7 @@ public class PersonController {
             e.printStackTrace();
         }
     }
+
     public static void deleteSupporterFromDb(Supporter supporter){
         try{
             DbConnectionController.session.beginTransaction();
@@ -39,15 +44,30 @@ public class PersonController {
             e.printStackTrace();
         }
     }
+
     public static void deleteFootballerRelations(Footballer footballer){
         footballer.getTrainings().forEach(o -> o.removeFootballer(footballer));
         footballer.getDieticians().forEach(o -> o.removeFootballer(footballer));
         footballer.getMatches().forEach(o -> o.getFootballers().remove(footballer));
     }
+
     public static void deleteDieticianRelations(Dietician dietician){
         dietician.getFootballers().forEach(o -> o.removeDietician(dietician));
     }
+
     public static void deleteCoachRelations(Coach coach){
         coach.getTrainings().forEach(o -> o.removeCoach(coach));
+    }
+
+    public static List<Footballer> getFootballers(){
+        List<Footballer> footballers = new ArrayList<>();
+        try{
+            DbConnectionController.session.beginTransaction();
+             footballers = DbConnectionController.session.createQuery("from Footballer").list();
+            DbConnectionController.session.getTransaction().commit();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return footballers;
     }
 }

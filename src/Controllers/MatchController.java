@@ -3,6 +3,8 @@ package Controllers;
 import Model.Club;
 import Model.Footballer;
 import Model.Match;
+import Model.Person;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,7 +90,7 @@ public class MatchController {
         List<Footballer> footballers = new ArrayList<>();
         try{
             DbConnectionController.session.beginTransaction();
-            List<Footballer> footballersFromDb = DbConnectionController.session.createQuery("from Footballer").list();
+            List<Footballer> footballersFromDb = PersonController.getFootballers();
             for(Footballer footballer : footballersFromDb){
                 if(!match.getFootballers().contains(footballer))
                     footballers.add(footballer);
