@@ -13,7 +13,7 @@
           <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
         </constraints>
       </vspacer>
-      <component id="9d7e4" class="javax.swing.JLabel" binding="clubLabel">
+      <component id="9d7e4" class="javax.swing.JLabel" binding="opponentLabel">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="6" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>

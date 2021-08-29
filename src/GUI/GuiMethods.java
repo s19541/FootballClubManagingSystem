@@ -10,7 +10,7 @@ public class GuiMethods extends JFrame{
 
     public static void setupFrame(){
         frame = new JFrame("Menu");
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         ImageIcon img = new ImageIcon("football_image.png");
         frame.setIconImage(img.getImage());

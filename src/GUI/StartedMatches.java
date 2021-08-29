@@ -22,24 +22,11 @@ public class StartedMatches {
 
         finishedMatches = MatchController.getFinishedMatches();
         DefaultListModel<Match> finishedMatchesListModel = new DefaultListModel<>();
-        for(Match match : finishedMatches){
-            finishedMatchesListModel.addElement(match);
-        }
+        finishedMatchesListModel.addAll(finishedMatches);
         finishedMatchesJList.setModel(finishedMatchesListModel);
 
-        buttonReturn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonReturnActionPerformed(e);
-            }
-        });
-
-        buttonEdit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonEditActionPerformed(e);
-            }
-        });
+        buttonReturn.addActionListener(e -> buttonReturnActionPerformed(e));
+        buttonEdit.addActionListener(e -> buttonEditActionPerformed(e));
 
         finishedMatchesJList.setCellRenderer(new DefaultListCellRenderer() {
 
@@ -47,7 +34,6 @@ public class StartedMatches {
             public Component getListCellRendererComponent(JList list, Object value, int index,
                                                           boolean isSelected, boolean cellHasFocus) {
                 Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-
                     setBackground(getColor(index));
                     if (isSelected) {
                         setBackground(getBackground().darker());

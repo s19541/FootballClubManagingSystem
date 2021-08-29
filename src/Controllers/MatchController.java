@@ -88,30 +88,11 @@ public class MatchController {
 
     public static List<Footballer> getFootballersOutOfSquad(Match match){
         List<Footballer> footballers = new ArrayList<>();
-        try{
-            DbConnectionController.session.beginTransaction();
-            List<Footballer> footballersFromDb = PersonController.getFootballers();
-            for(Footballer footballer : footballersFromDb){
-                if(!match.getFootballers().contains(footballer))
-                    footballers.add(footballer);
-            }
-            DbConnectionController.session.getTransaction().commit();
-        }
-        catch(Exception e){
-            e.printStackTrace();
+        List<Footballer> footballersFromDb = PersonController.getFootballers();
+        for(Footballer footballer : footballersFromDb){
+            if(!match.getFootballers().contains(footballer))
+                footballers.add(footballer);
         }
         return footballers;
-    }
-
-    public static List<Club> getClubsFromDb(){
-        List<Club> clubsFromDb = new ArrayList<>();
-        try{
-            DbConnectionController.session.beginTransaction();
-            clubsFromDb = DbConnectionController.session.createQuery("from Club").list();
-            DbConnectionController.session.getTransaction().commit();
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return  clubsFromDb;
     }
 }

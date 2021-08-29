@@ -5,13 +5,13 @@ import Model.Match;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class UpdateResult {
     private JPanel panelUpdateResult;
-    private JLabel clubLabel;
+    private JLabel opponentLabel;
     private JLabel dateLabel;
     private JTextField textFieldGoalsFor;
     private JTextField textFieldGoalsAgainst;
@@ -24,58 +24,51 @@ public class UpdateResult {
         this.updatingMatch = updatingMatch;
         GuiMethods.changeTitle("Update result");
 
-        clubLabel.setText(updatingMatch.getClub().getName());
+        setupOpponentLabel();
+        setupScore();
+        setupDateLabel();
 
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        dateLabel.setText(updatingMatch.getDate().format(format));
-
-        if(updatingMatch.getGoalsFor() != -1){
-            textFieldGoalsFor.setText(String.valueOf(updatingMatch.getGoalsFor()));
-            textFieldGoalsAgainst.setText(String.valueOf(updatingMatch.getGoalsAgainst()));
-        }
-
-        if(updatingMatch.isRunning()){
-            timer  = new Thread(){
-                @Override
-                public void run() {
-                    while(true)
-                        dateLabel.setText(updatingMatch.getDate().format(format)
-                            + " (" + ((LocalDateTime.now().getMinute() - updatingMatch.getDate().getMinute()) >= 10 ? (LocalDateTime.now().getMinute() - updatingMatch.getDate().getMinute()) : "0" + (LocalDateTime.now().getMinute() - updatingMatch.getDate().getMinute()))
-                            + ":" + ((LocalDateTime.now().getSecond() - updatingMatch.getDate().getSecond()) >= 10 ? (LocalDateTime.now().getSecond() - updatingMatch.getDate().getSecond()) : "0" + (LocalDateTime.now().getSecond() - updatingMatch.getDate().getSecond())) + ")");
-                }
-            };
-            timer.start();
-        }
-
-        buttonCancel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonCancelActionPerformed(e);
-            }
-        });
-
-        buttonSave.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonSaveActionPerformed(e);
-            }
-        });
-
+        buttonCancel.addActionListener(e -> buttonCancelActionPerformed(e));
+        buttonSave.addActionListener(e -> buttonSaveActionPerformed(e));
     }
 
     public JPanel getPanelUpdateResult() {
         return panelUpdateResult;
     }
 
+    private void setupOpponentLabel(){
+        opponentLabel.setText(updatingMatch.getClub().getName());
+    }
+
+    private void setupScore(){
+        if(updatingMatch.getGoalsFor() != -1){
+            textFieldGoalsFor.setText(String.valueOf(updatingMatch.getGoalsFor()));
+            textFieldGoalsAgainst.setText(String.valueOf(updatingMatch.getGoalsAgainst()));
+        }
+    }
+
+    private void setupDateLabel(){
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        dateLabel.setText(updatingMatch.getDate().format(format));
+
+        if(updatingMatch.isRunning()){
+            timer  = new Thread(() -> {
+                while(true){
+                    Duration duration = Duration.between(updatingMatch.getDate(), LocalDateTime.now());
+                    dateLabel.setText(updatingMatch.getDate().format(format)
+                            + " (" + (duration.toMinutes() >= 10 ? duration.toMinutes() : "0" + duration.toMinutes())
+                            + ":" + (duration.toSeconds()%60 >= 10 ? duration.toSeconds()%60 : "0" + duration.toSeconds()%60) + ")");
+                }
+            });
+            timer.start();
+        }
+    }
+
     public void buttonCancelActionPerformed(ActionEvent e){
-        if(timer != null)
-            timer.stop();
         GuiMethods.setPanel(new StartedMatches().getPanelFinishedMatches());
     }
 
     public void buttonSaveActionPerformed(ActionEvent e){
-        if(timer != null)
-            timer.stop();
         if(textFieldGoalsFor.getText().equals(""))
             textFieldGoalsFor.setText("0");
         if(textFieldGoalsAgainst.getText().equals(""))

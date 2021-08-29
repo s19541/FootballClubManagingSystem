@@ -13,19 +13,9 @@ public class Menu {
     private JButton trainingsButton;
     private JButton leagueButton;
     public Menu() {
-        matchesButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonMatchesActionPerformed(e);
-            }
-        });
+        matchesButton.addActionListener(e -> buttonMatchesActionPerformed(e));
 
-        ActionListener notAvailableActionListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                notAvailableActionPerformed(e);
-            }
-        };
+        ActionListener notAvailableActionListener = e -> notAvailableActionPerformed(e);
 
         personsButton.addActionListener(notAvailableActionListener);
         trainingsButton.addActionListener(notAvailableActionListener);

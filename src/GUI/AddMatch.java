@@ -2,6 +2,7 @@ package GUI;
 
 
 
+import Controllers.ClubController;
 import Controllers.MatchController;
 import Controllers.PersonController;
 import Model.Club;
@@ -35,6 +36,8 @@ public class AddMatch {
     private JTextField textFieldMinute;
     private JButton buttonRemoveFootballer;
     private JPanel panelAddMatchInside;
+    private JPanel panelDate;
+    private JPanel panelTime;
     private List<Footballer> matchSquad;
     private DefaultListModel<Footballer> footballerListModel;
 
@@ -42,9 +45,6 @@ public class AddMatch {
         GuiMethods.changeTitle("Add match");
         matchSquad = new ArrayList<>();
         footballerListModel = new DefaultListModel<>();
-        for(Footballer footballer : matchSquad){
-            footballerListModel.addElement(footballer);
-        }
         matchSquadJList.setModel(footballerListModel);
 
         setupDatePicker();
@@ -97,7 +97,7 @@ public class AddMatch {
     }
 
     private void setupOpponentPicker(){
-        comboBoxOpponent.setModel(new DefaultComboBoxModel(MatchController.getClubsFromDb().toArray()));
+        comboBoxOpponent.setModel(new DefaultComboBoxModel(ClubController.getClubsFromDb().toArray()));
     }
 
     private void setupSquadManager(){

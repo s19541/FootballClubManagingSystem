@@ -22,38 +22,16 @@ public class MatchSquad {
         GuiMethods.changeTitle("Match squad vs " + match.getClub().getName());
 
         DefaultListModel footballerListModel = new DefaultListModel<>();
-        for(Footballer footballer : match.getFootballers()){
-            footballerListModel.addElement(footballer);
-        }
+        footballerListModel.addAll(match.getFootballers());
         matchSquadJList.setModel(footballerListModel);
 
-        buttonReturn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonReturnActionPerformed(e);
-            }
-        });
-
-        buttonAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonAddActionPerformed(e);
-            }
-        });
-        buttonRemove.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonRemoveActionPerformed(e);
-            }
-        });
+        buttonAdd.addActionListener(e -> buttonAddActionPerformed(e));
+        buttonRemove.addActionListener(e -> buttonRemoveActionPerformed(e));
+        buttonReturn.addActionListener(e -> buttonReturnActionPerformed(e));
     }
 
     public JPanel getPanelMatchSquad() {
         return panelMatchSquad;
-    }
-
-    private void buttonReturnActionPerformed(ActionEvent e){
-        GuiMethods.setPanel(new UpcomingMatches().getPanelUpcomingMatches());
     }
 
     private void buttonAddActionPerformed(ActionEvent e){
@@ -86,6 +64,10 @@ public class MatchSquad {
                 GuiMethods.setPanel(new MatchSquad(match).getPanelMatchSquad());
             }
         }
+    }
+
+    private void buttonReturnActionPerformed(ActionEvent e){
+        GuiMethods.setPanel(new UpcomingMatches().getPanelUpcomingMatches());
     }
 }
 

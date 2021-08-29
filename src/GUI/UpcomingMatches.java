@@ -24,51 +24,18 @@ public class UpcomingMatches {
 
         upcomingMatches = MatchController.getMatchSchedule();
         DefaultListModel<Match> matchScheduleListModel = new DefaultListModel<>();
-        for(Match match : upcomingMatches){
-            matchScheduleListModel.addElement(match);
-        }
+        matchScheduleListModel.addAll(upcomingMatches);
         matchScheduleJList.setModel(matchScheduleListModel);
 
-        buttonReturn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonReturnActionPerformed(e);
-            }
-        });
+        buttonAdd.addActionListener(e -> buttonAddActionPerformed(e));
+        buttonEditSquad.addActionListener(e -> buttonEditSquadActionPerformed(e));
 
-        buttonShowFinished.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonShowFinishedActionPerformed(e);
-            }
-        });
-
-        buttonAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                buttonAddActionPerformed(e);
-            }
-        });
-
-        buttonEditSquad.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-               buttonEditSquadActionPerformed(e);
-            }
-        });
-
+        buttonReturn.addActionListener(e -> buttonReturnActionPerformed(e));
+        buttonShowFinished.addActionListener(e -> buttonShowFinishedActionPerformed(e));
     }
 
     public JPanel getPanelUpcomingMatches() {
         return panelUpcomingMatches;
-    }
-
-    private void buttonReturnActionPerformed(ActionEvent e){
-        GuiMethods.setPanel(new Menu().getPanelMain());
-    }
-
-    private void buttonShowFinishedActionPerformed(ActionEvent e){
-        GuiMethods.setPanel(new StartedMatches().getPanelFinishedMatches());
     }
 
     private void buttonAddActionPerformed(ActionEvent e){
@@ -87,5 +54,11 @@ public class UpcomingMatches {
         }
     }
 
+    private void buttonReturnActionPerformed(ActionEvent e){
+        GuiMethods.setPanel(new Menu().getPanelMain());
+    }
 
+    private void buttonShowFinishedActionPerformed(ActionEvent e){
+        GuiMethods.setPanel(new StartedMatches().getPanelFinishedMatches());
+    }
 }

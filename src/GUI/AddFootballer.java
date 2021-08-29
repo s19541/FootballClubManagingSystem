@@ -24,27 +24,12 @@ public class AddFootballer {
         GuiMethods.changeTitle("Add player to squad vs " + match.getClub().getName());
 
         DefaultListModel<Footballer> footballerListModel = new DefaultListModel<>();
-        footballers = new ArrayList<>();
-        for(Footballer footballer : MatchController.getFootballersOutOfSquad(match)){
-            footballers.add(footballer);
-            footballerListModel.addElement(footballer);
-        }
+        footballers = MatchController.getFootballersOutOfSquad(match);
+        footballerListModel.addAll(footballers);
         addFootballerJList.setModel(footballerListModel);
 
-        buttonAdd.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                    buttonAddActionPerformed(e);
-            }
-        });
-
-        buttonReturn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                    buttonReturnActionPerformed(e);
-            }
-        });
-
+        buttonAdd.addActionListener(e -> buttonAddActionPerformed(e));
+        buttonReturn.addActionListener(e -> buttonReturnActionPerformed(e));
     }
 
     public JPanel getPanelAddFootballer() {

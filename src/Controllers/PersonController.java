@@ -63,7 +63,7 @@ public class PersonController {
         List<Footballer> footballers = new ArrayList<>();
         try{
             DbConnectionController.session.beginTransaction();
-             footballers = DbConnectionController.session.createQuery("from Footballer").list();
+            footballers = DbConnectionController.session.createQuery("from Footballer").list();
             DbConnectionController.session.getTransaction().commit();
         }catch(Exception e){
             e.printStackTrace();
