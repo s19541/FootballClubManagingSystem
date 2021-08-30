@@ -1,9 +1,13 @@
 package GUI;
 
 import Controllers.MatchController;
+import Model.Footballer;
 import Model.Match;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Class for managing match squad gui
@@ -62,21 +66,23 @@ public class MatchSquad {
      * @param e Unused
      */
     private void buttonRemoveActionPerformed(ActionEvent e){
-        int selectedIndex = matchSquadJList.getSelectedIndex();
+        int[] selectedIndices = matchSquadJList.getSelectedIndices();
 
-        if (selectedIndex == -1) {
+        if (selectedIndices.length == 0) {
             JOptionPane.showMessageDialog(panelMatchSquad.getParent(),
                     "You didn't select any footballer!",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-            if (match.getFootballers().size() <= 14) {
+            if (match.getFootballers().size() - selectedIndices.length < 14) {
                 JOptionPane.showMessageDialog(panelMatchSquad.getParent(),
                         "Squad must have at least 14 footballers!",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
             } else {
-                MatchController.removeFootballerFromSquad(match, match.getFootballers().get(matchSquadJList.getSelectedIndex()));
+                List<Footballer> footballersToDelete = new ArrayList<>();
+                Arrays.stream(selectedIndices).forEach(o -> footballersToDelete.add(match.getFootballers().get(o)));
+                footballersToDelete.stream().forEach(o -> MatchController.removeFootballerFromSquad(match, o));
                 GuiMethods.setPanel(new MatchSquad(match).getPanelMatchSquad());
             }
         }

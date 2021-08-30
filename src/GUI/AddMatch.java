@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -201,16 +202,20 @@ public class AddMatch {
      * @param e Unused
      */
     private void buttonRemoveFootballerActionPerformed(ActionEvent e){
-        int selectedIndex = matchSquadJList.getSelectedIndex();
-        if (selectedIndex == -1) {
+        int[] selectedIndices = matchSquadJList.getSelectedIndices();
+        if (selectedIndices.length == 0) {
             JOptionPane.showMessageDialog(panelAddMatch.getParent(),
                     "You didn't select any footballer!",
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-            comboBoxFootballers.addItem(matchSquad.get(selectedIndex));
-            footballerListModel.removeElement(matchSquad.get(selectedIndex));
-            matchSquad.remove(selectedIndex);
+            List<Footballer> footballersToDelete = new ArrayList<>();
+            Arrays.stream(selectedIndices).forEach(o -> footballersToDelete.add(matchSquad.get(o)));
+            footballersToDelete.stream().forEach(o -> {
+                comboBoxFootballers.addItem(o);
+                footballerListModel.removeElement(o);
+                matchSquad.remove(o);
+            });
         }
     }
 

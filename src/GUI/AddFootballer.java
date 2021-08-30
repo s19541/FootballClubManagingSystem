@@ -6,6 +6,8 @@ import Model.Match;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -50,8 +52,26 @@ public class AddFootballer {
      * @param e Unused
      */
     private void buttonAddActionPerformed(ActionEvent e){
-        MatchController.addFootballerToSquad(match, footballers.get(addFootballerJList.getSelectedIndex()));
-        GuiMethods.setPanel(new MatchSquad(match).getPanelMatchSquad());
+        int[] selectedIndices = addFootballerJList.getSelectedIndices();
+        if(selectedIndices.length == 0){
+            JOptionPane.showMessageDialog(panelAddFootballer.getParent(),
+                    "You didn't select any footballer!",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }else if(match.getFootballers().size() + selectedIndices.length > 20){
+            JOptionPane.showMessageDialog(panelAddFootballer.getParent(),
+                    "Squad can't have more than 20 footballers!",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }else{
+            List<Footballer> footballersToAdd = new ArrayList<>();
+            Arrays.stream(selectedIndices).forEach(o -> footballersToAdd.add(footballers.get(o)));
+            footballersToAdd.stream().forEach(o -> {
+                MatchController.addFootballerToSquad(match, o);
+            });
+
+            GuiMethods.setPanel(new MatchSquad(match).getPanelMatchSquad());
+        }
     }
 
     /**
