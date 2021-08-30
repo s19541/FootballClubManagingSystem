@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+/**
+ * Class for managing add match gui
+ */
 public class AddMatch {
     private JPanel panelAddMatch;
     private JButton buttonReturn;
@@ -41,6 +44,9 @@ public class AddMatch {
     private List<Footballer> matchSquad;
     private DefaultListModel<Footballer> footballerListModel;
 
+    /**
+     * Constructor which setup panel for adding match
+     */
     public AddMatch() {
         GuiMethods.changeTitle("Add match");
         matchSquad = new ArrayList<>();
@@ -57,10 +63,17 @@ public class AddMatch {
         buttonAdd.addActionListener(e -> buttonAddActionPerformed(e));
     }
 
+    /**
+     * Gets panel for adding match
+     * @return panel for adding match
+     */
     public JPanel getPanelAddMatch() {
         return panelAddMatch;
     }
 
+    /**
+     * Method which setup match date picker
+     */
     private void setupDatePicker(){
         comboBoxMonth.setModel(new DefaultComboBoxModel(Month.values()));
         comboBoxMonth.setSelectedItem(LocalDate.now().getMonth());
@@ -74,6 +87,9 @@ public class AddMatch {
         comboBoxYear.addActionListener(onChangeDateListener);
     }
 
+    /**
+     * Method which setup match ticket prize picker
+     */
     private void setupTicketPrizePicker(){
         textFieldTicketPrize.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -82,6 +98,9 @@ public class AddMatch {
         });
     }
 
+    /**
+     * Method which setup match time picker
+     */
     private void setupTimePicker(){
         textFieldHour.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent e) {
@@ -96,10 +115,16 @@ public class AddMatch {
         });
     }
 
+    /**
+     * Method which setup match opponent picker
+     */
     private void setupOpponentPicker(){
         comboBoxOpponent.setModel(new DefaultComboBoxModel(ClubController.getClubsFromDb().toArray()));
     }
 
+    /**
+     * Method which setup match squad manager
+     */
     private void setupSquadManager(){
         comboBoxFootballers.setModel(new DefaultComboBoxModel(PersonController.getFootballers().toArray()));
 
@@ -107,6 +132,10 @@ public class AddMatch {
         buttonRemoveFootballer.addActionListener(e -> buttonRemoveFootballerActionPerformed(e));
     }
 
+    /**
+     * Method which change options in combo box of days depending on selected month and year
+     * @param e Unused
+     */
     private void onChangeDateActionPerformed(ActionEvent e){
         int selectedDay = (int)comboBoxDay.getSelectedItem();
         comboBoxDay.setModel(new DefaultComboBoxModel(IntStream.rangeClosed(1, YearMonth.of((int)comboBoxYear.getSelectedItem(), comboBoxMonth.getSelectedIndex() + 1).lengthOfMonth()).boxed().collect(Collectors.toList()).toArray()));
@@ -114,6 +143,10 @@ public class AddMatch {
             comboBoxDay.setSelectedItem(selectedDay);
     }
 
+    /**
+     * Method responsible for controlling correctness of match ticket price in text field
+     * @param e key event which allow to get pressed button
+     */
     private void textFieldTicketPrizeKeyPressed(KeyEvent e){
         if ((e.getKeyChar() >= '0' && e.getKeyChar() <= '9') || e.getKeyChar() == 8) {
             textFieldTicketPrize.setEditable(true);
@@ -122,6 +155,10 @@ public class AddMatch {
         }
     }
 
+    /**
+     * Method responsible for controlling correctness of hour value in text field
+     * @param e key event which allow to get pressed button
+     */
     private void textFieldHourKeyPressed(KeyEvent e){
         String value = textFieldHour.getText();
         int l = value.length();
@@ -132,6 +169,10 @@ public class AddMatch {
         }
     }
 
+    /**
+     * Method responsible for controlling correctness of minute value in text field
+     * @param e key event which allow to get pressed button
+     */
     private void textFieldMinuteKeyPressed(KeyEvent e){
         String value = textFieldMinute.getText();
         int l = value.length();
@@ -142,6 +183,10 @@ public class AddMatch {
         }
     }
 
+    /**
+     * Method responsible for adding footballer to match squad
+     * @param e Unused
+     */
     private void buttonAddFootballerActionPerformed(ActionEvent e){
         Footballer footballer = (Footballer) comboBoxFootballers.getSelectedItem();
         if (footballer != null) {
@@ -151,6 +196,10 @@ public class AddMatch {
         }
     }
 
+    /**
+     * Method responsible for removing footballer to match squad
+     * @param e Unused
+     */
     private void buttonRemoveFootballerActionPerformed(ActionEvent e){
         int selectedIndex = matchSquadJList.getSelectedIndex();
         if (selectedIndex == -1) {
@@ -165,10 +214,18 @@ public class AddMatch {
         }
     }
 
+    /**
+     * Method which change panel to upcoming matches panel
+     * @param e Unused
+     */
     private void buttonReturnActionPerformed(ActionEvent e){
         GuiMethods.setPanel(new UpcomingMatches().getPanelUpcomingMatches());
     }
 
+    /**
+     * Method which add match to db and change panel to upcoming matches panel, controlling correctness of match data
+     * @param e Unused
+     */
     private void buttonAddActionPerformed(ActionEvent e){
         try{
             addMatch();
@@ -189,6 +246,10 @@ public class AddMatch {
         }
     }
 
+    /**
+     * Method which create match from data from components and add it to db
+     * @throws Exception throw exception if match squad has invalid number of footballers
+     */
     private void addMatch() throws Exception{
         Match newMatch = new Match(LocalDateTime.of((int)comboBoxYear.getSelectedItem(),(Month)comboBoxMonth.getSelectedItem(),(int)comboBoxDay.getSelectedItem(), Integer.parseInt(textFieldHour.getText()), Integer.parseInt(textFieldMinute.getText())), Integer.parseInt(textFieldTicketPrize.getText()), (Club)comboBoxOpponent.getSelectedItem());
         newMatch.setFootballers(matchSquad);

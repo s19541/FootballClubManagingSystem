@@ -2,27 +2,31 @@ package GUI;
 
 import Controllers.MatchController;
 import Model.Match;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * Class for managing started matches gui
+ */
 public class StartedMatches {
     private JList finishedMatchesJList;
     private JPanel panelFinishedMatches;
     private JButton buttonReturn;
     private JButton buttonEdit;
     private JPanel panelStartedMatchesInside;
-    private List<Match> finishedMatches;
+    private List<Match> startedMatches;
 
+    /**
+     * Constructor which setup panel for started matches
+     */
     public StartedMatches() {
         GuiMethods.changeTitle("Started Matches");
 
-        finishedMatches = MatchController.getFinishedMatches();
+        startedMatches = MatchController.getStartedMatches();
         DefaultListModel<Match> finishedMatchesListModel = new DefaultListModel<>();
-        finishedMatchesListModel.addAll(finishedMatches);
+        finishedMatchesListModel.addAll(startedMatches);
         finishedMatchesJList.setModel(finishedMatchesListModel);
 
         buttonReturn.addActionListener(e -> buttonReturnActionPerformed(e));
@@ -42,19 +46,26 @@ public class StartedMatches {
             }
 
         });
-
-
     }
 
+    /**
+     * Gets panel for started matches
+     * @return panel for started matches
+     */
     public JPanel getPanelFinishedMatches() {
         return panelFinishedMatches;
     }
 
+    /**
+     * Gets color of match in JList
+     * @param index index of match in started matches list
+     * @return color of match in JList
+     */
     private Color getColor(int index){
         Color color;
-        if (finishedMatches.get(index).getGoalsFor() > finishedMatches.get(index).getGoalsAgainst()) {
+        if (startedMatches.get(index).getGoalsFor() > startedMatches.get(index).getGoalsAgainst()) {
             color = Color.GREEN;
-        } else if(finishedMatches.get(index).getGoalsFor() < finishedMatches.get(index).getGoalsAgainst()){
+        } else if(startedMatches.get(index).getGoalsFor() < startedMatches.get(index).getGoalsAgainst()){
             color = Color.RED;
         } else{
             color = Color.YELLOW;
@@ -62,10 +73,18 @@ public class StartedMatches {
         return color;
     }
 
+    /**
+     * Method which change panel to upcoming matches panel
+     * @param e Unused
+     */
     private void buttonReturnActionPerformed(ActionEvent e){
         GuiMethods.setPanel(new UpcomingMatches().getPanelUpcomingMatches());
     }
 
+    /**
+     * Method which change panel to update match result panel if user select match in JList
+     * @param e Unused
+     */
     private void buttonEditActionPerformed(ActionEvent e){
         int selectedIndex = finishedMatchesJList.getSelectedIndex();
         if (selectedIndex == -1) {
@@ -74,7 +93,7 @@ public class StartedMatches {
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-            GuiMethods.setPanel((new UpdateResult(finishedMatches.get(selectedIndex)).getPanelUpdateResult()));
+            GuiMethods.setPanel((new UpdateResult(startedMatches.get(selectedIndex)).getPanelUpdateResult()));
         }
     }
 }

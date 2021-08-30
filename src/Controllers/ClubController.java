@@ -1,11 +1,17 @@
 package Controllers;
 
 import Model.Club;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for club data
+ */
 public class ClubController {
+    /**
+     * Gets all clubs from db
+     * @return list of all club from db
+     */
     public static List<Club> getClubsFromDb(){
         List<Club> clubsFromDb = new ArrayList<>();
         try{

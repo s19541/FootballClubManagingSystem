@@ -6,10 +6,11 @@ import Model.Match;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class for managing add footballer gui
+ */
 public class AddFootballer {
     private JList addFootballerJList;
     private JPanel panelAddFootballer;
@@ -19,6 +20,10 @@ public class AddFootballer {
     private List<Footballer> footballers;
     private Match match;
 
+    /**
+     * Constructor which setup panel for adding footballer to match
+     * @param match Match to which player is being added
+     */
     public AddFootballer(Match match) {
         this.match = match;
         GuiMethods.changeTitle("Add player to squad vs " + match.getClub().getName());
@@ -32,15 +37,27 @@ public class AddFootballer {
         buttonReturn.addActionListener(e -> buttonReturnActionPerformed(e));
     }
 
+    /**
+     * Gets panel for adding footballer to match
+     * @return panel for adding footballer to match
+     */
     public JPanel getPanelAddFootballer() {
         return panelAddFootballer;
     }
 
+    /**
+     * Method which add footballer to squad and change panel to match squad panel
+     * @param e Unused
+     */
     private void buttonAddActionPerformed(ActionEvent e){
         MatchController.addFootballerToSquad(match, footballers.get(addFootballerJList.getSelectedIndex()));
         GuiMethods.setPanel(new MatchSquad(match).getPanelMatchSquad());
     }
 
+    /**
+     * Method which panel to match squad panel
+     * @param e Unused
+     */
     private void buttonReturnActionPerformed(ActionEvent e){
         GuiMethods.setPanel(new MatchSquad(match).getPanelMatchSquad());
     }

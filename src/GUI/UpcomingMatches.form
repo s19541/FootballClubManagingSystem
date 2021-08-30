@@ -30,7 +30,7 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="d4649" class="javax.swing.JList" binding="matchScheduleJList">
+              <component id="d4649" class="javax.swing.JList" binding="upcomingMatchesJList">
                 <constraints/>
                 <properties/>
               </component>

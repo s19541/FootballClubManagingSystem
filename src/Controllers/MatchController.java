@@ -8,7 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Controller for match data
+ */
 public class MatchController {
+    /**
+     * Gets all matches from db
+     * @return list of all matches from db
+     */
     private static List<Match> getMatches(){
         List<Match> matchesFromDb = new ArrayList<>();
         try{
@@ -21,14 +28,26 @@ public class MatchController {
         return  matchesFromDb;
     }
 
-    public static List<Match> getMatchSchedule(){
+    /**
+     * Gets upcoming matches from db
+     * @return list of upcoming matches from db
+     */
+    public static List<Match> getUpcomingMatches(){
         return getMatches().stream().filter(x -> x.getDate().isAfter(LocalDateTime.now())).collect(Collectors.toList());
     }
 
-    public static List<Match> getFinishedMatches(){
+    /**
+     * Gets started matches from db
+     * @return list of started matches from db
+     */
+    public static List<Match> getStartedMatches(){
         return getMatches().stream().filter(x -> x.isFinished() || x.isRunning()).collect(Collectors.toList());
     }
 
+    /**
+     * Method which add match to db
+     * @param match Match to be added
+     */
     public static void addMatch(Match match){
         try{
             DbConnectionController.session.beginTransaction();
@@ -38,6 +57,11 @@ public class MatchController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Method which update match in db
+     * @param match Match to be updated
+     */
     public static void updateMatch(Match match){
         try{
             DbConnectionController.session.beginTransaction();
@@ -48,30 +72,41 @@ public class MatchController {
         }
     }
 
+    /**
+     * Method which remove footballer from match squad in db
+     * @param match Match to which footballer is being removed
+     * @param footballer Footballer to remove from match
+     */
     public static void removeFootballerFromSquad(Match match, Footballer footballer){
         try{
-            DbConnectionController.session.beginTransaction();
             match.getFootballers().remove(footballer);
-            DbConnectionController.session.update(match);
-            DbConnectionController.session.getTransaction().commit();
+            updateMatch(match);
         }
         catch(Exception e){
             e.printStackTrace();
         }
     }
 
+    /**
+     * Method which add footballer to match squad in db
+     * @param match Match to which footballer is being added
+     * @param footballer Footballer to add to match
+     */
     public static void addFootballerToSquad(Match match, Footballer footballer){
         try{
-            DbConnectionController.session.beginTransaction();
             match.getFootballers().add(footballer);
-            DbConnectionController.session.update(match);
-            DbConnectionController.session.getTransaction().commit();
+            updateMatch(match);
         }
         catch(Exception e){
             e.printStackTrace();
         }
     }
 
+    /**
+     * Method which return footballers out of match squad
+     * @param match
+     * @return List of footballers out of match squad
+     */
     public static List<Footballer> getFootballersOutOfSquad(Match match){
         List<Footballer> footballers = new ArrayList<>();
         List<Footballer> footballersFromDb = PersonController.getFootballers();

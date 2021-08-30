@@ -9,6 +9,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class for managing update match result gui
+ */
 public class UpdateResult {
     private JPanel panelUpdateResult;
     private JLabel opponentLabel;
@@ -20,6 +23,10 @@ public class UpdateResult {
     private Match updatingMatch;
     private Thread timer;
 
+    /**
+     * Constructor which setup panel for update match result
+     * @param updatingMatch match which is being updated
+     */
     public UpdateResult(Match updatingMatch) {
         this.updatingMatch = updatingMatch;
         GuiMethods.changeTitle("Update result");
@@ -32,14 +39,24 @@ public class UpdateResult {
         buttonSave.addActionListener(e -> buttonSaveActionPerformed(e));
     }
 
+    /**
+     * Gets panel for update match result
+     * @return panel for update match result
+     */
     public JPanel getPanelUpdateResult() {
         return panelUpdateResult;
     }
 
+    /**
+     * Method which setup opponent label
+     */
     private void setupOpponentLabel(){
         opponentLabel.setText(updatingMatch.getClub().getName());
     }
 
+    /**
+     * Method which setup score of updating match
+     */
     private void setupScore(){
         if(updatingMatch.getGoalsFor() != -1){
             textFieldGoalsFor.setText(String.valueOf(updatingMatch.getGoalsFor()));
@@ -47,6 +64,9 @@ public class UpdateResult {
         }
     }
 
+    /**
+     * Method which setup date label
+     */
     private void setupDateLabel(){
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         dateLabel.setText(updatingMatch.getDate().format(format));
@@ -64,10 +84,18 @@ public class UpdateResult {
         }
     }
 
+    /**
+     * Method which change panel to finished matches panel
+     * @param e Unused
+     */
     public void buttonCancelActionPerformed(ActionEvent e){
         GuiMethods.setPanel(new StartedMatches().getPanelFinishedMatches());
     }
 
+    /**
+     * Method which checking correctness of match result and when data are correct, save result to db and change panel to finished match panel
+     * @param e Unused
+     */
     public void buttonSaveActionPerformed(ActionEvent e){
         if(textFieldGoalsFor.getText().equals(""))
             textFieldGoalsFor.setText("0");
