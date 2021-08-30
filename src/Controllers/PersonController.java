@@ -5,8 +5,15 @@ import Model.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for managing person data
+ */
 public class PersonController {
 
+    /**
+     * method which delete worker from db
+     * @param worker worker who is deleted from db
+     */
     public static void deleteWorkerFromDb(Worker worker){
         try{
             DbConnectionController.session.beginTransaction();
@@ -31,6 +38,10 @@ public class PersonController {
         }
     }
 
+    /**
+     * method which delete supporter from db
+     * @param supporter supporter who is deleted from db
+     */
     public static void deleteSupporterFromDb(Supporter supporter){
         try{
             DbConnectionController.session.beginTransaction();
@@ -45,20 +56,36 @@ public class PersonController {
         }
     }
 
+    /**
+     * method which delete footballer relations in db
+     * @param footballer footballer whose relations are deleted from db
+     */
     public static void deleteFootballerRelations(Footballer footballer){
         footballer.getTrainings().forEach(o -> o.removeFootballer(footballer));
         footballer.getDieticians().forEach(o -> o.removeFootballer(footballer));
         footballer.getMatches().forEach(o -> o.getFootballers().remove(footballer));
     }
 
+    /**
+     * method which delete dietician relations in db
+     * @param dietician dietician whose relations are deleted from db
+     */
     public static void deleteDieticianRelations(Dietician dietician){
         dietician.getFootballers().forEach(o -> o.removeDietician(dietician));
     }
 
+    /**
+     * method which delete coach relations in db
+     * @param coach coach whose relations are deleted from db
+     */
     public static void deleteCoachRelations(Coach coach){
         coach.getTrainings().forEach(o -> o.removeCoach(coach));
     }
 
+    /**
+     * Gets all footballers from db
+     * @return list of all footballers from db
+     */
     public static List<Footballer> getFootballers(){
         List<Footballer> footballers = new ArrayList<>();
         try{

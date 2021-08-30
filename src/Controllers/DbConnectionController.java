@@ -7,18 +7,23 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to manage connection with db
+ */
 public class DbConnectionController {
     public static StandardServiceRegistry registry = null;
     public static SessionFactory sessionFactory = null;
     public static Session session = null;
 
+    /**
+     * Method responsible for start connection with db
+     */
     public static void startConnectionWithDb(){
         try {
             registry = new StandardServiceRegistryBuilder()
@@ -34,6 +39,9 @@ public class DbConnectionController {
         }
     }
 
+    /**
+     * Method responsible for stop connection with db
+     */
     public static void stopConnectionWithDb(){
         if (sessionFactory != null) {
             sessionFactory.close();
@@ -41,6 +49,9 @@ public class DbConnectionController {
         }
     }
 
+    /**
+     * Method responsible for add example data to db
+     */
     public static void prepareExampleData(){
         Person person1 = new Person("Jan", "Kibic");
         Person person2 = new Person("Maciek", "Los");

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Controller for club data
+ * Controller for managing club data
  */
 public class ClubController {
     /**

@@ -22,7 +22,7 @@ public class AddFootballer {
 
     /**
      * Constructor which setup panel for adding footballer to match
-     * @param match Match to which player is being added
+     * @param match Match to which player is added
      */
     public AddFootballer(Match match) {
         this.match = match;

@@ -1,13 +1,21 @@
 package GUI;
 
 import Controllers.DbConnectionController;
-
 import javax.swing.*;
 import java.awt.event.WindowEvent;
 
+/**
+ * Class which contains methods to manage frame
+ */
 public class GuiMethods extends JFrame{
+    /**
+     * frame of application
+     */
     private static JFrame frame;
 
+    /**
+     * setup frame
+     */
     public static void setupFrame(){
         frame = new JFrame("Menu");
         frame.setResizable(false);
@@ -24,11 +32,19 @@ public class GuiMethods extends JFrame{
         });
     }
 
+    /**
+     * Method to set actual panel
+     * @param panel Panel to set
+     */
     public static void setPanel(JPanel panel){
         frame.setContentPane(panel);
         frame.pack();
     }
 
+    /**
+     * Method to change title of frame
+     * @param title New title to set
+     */
     public static void changeTitle(String title){
         frame.setTitle(title);
     }

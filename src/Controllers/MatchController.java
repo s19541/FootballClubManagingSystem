@@ -5,11 +5,12 @@ import Model.Match;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Controller for match data
+ * Controller for managing match data
  */
 public class MatchController {
     /**
@@ -33,7 +34,7 @@ public class MatchController {
      * @return list of upcoming matches from db
      */
     public static List<Match> getUpcomingMatches(){
-        return getMatches().stream().filter(x -> x.getDate().isAfter(LocalDateTime.now())).collect(Collectors.toList());
+        return getMatches().stream().filter(x -> x.getDate().isAfter(LocalDateTime.now())).sorted(Comparator.comparing(Match::getDate)).collect(Collectors.toList());
     }
 
     /**
@@ -41,12 +42,12 @@ public class MatchController {
      * @return list of started matches from db
      */
     public static List<Match> getStartedMatches(){
-        return getMatches().stream().filter(x -> x.isFinished() || x.isRunning()).collect(Collectors.toList());
+        return getMatches().stream().filter(x -> x.isFinished() || x.isRunning()).sorted(Comparator.comparing(Match::getDate)).collect(Collectors.toList());
     }
 
     /**
      * Method which add match to db
-     * @param match Match to be added
+     * @param match Match which is added to db
      */
     public static void addMatch(Match match){
         try{
@@ -60,7 +61,7 @@ public class MatchController {
 
     /**
      * Method which update match in db
-     * @param match Match to be updated
+     * @param match Match which is updated in db
      */
     public static void updateMatch(Match match){
         try{
@@ -89,7 +90,7 @@ public class MatchController {
 
     /**
      * Method which add footballer to match squad in db
-     * @param match Match to which footballer is being added
+     * @param match Match to which footballer is added
      * @param footballer Footballer to add to match
      */
     public static void addFootballerToSquad(Match match, Footballer footballer){
@@ -104,7 +105,7 @@ public class MatchController {
 
     /**
      * Method which return footballers out of match squad
-     * @param match
+     * @param match Match from which footballers out of squad are taken
      * @return List of footballers out of match squad
      */
     public static List<Footballer> getFootballersOutOfSquad(Match match){

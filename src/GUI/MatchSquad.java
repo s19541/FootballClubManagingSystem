@@ -19,7 +19,7 @@ public class MatchSquad {
 
     /**
      * Constructor which setup panel for match squad
-     * @param match Match which squad is being displayed
+     * @param match Match which squad is displayed
      */
     public MatchSquad(Match match) {
         this.match = match;

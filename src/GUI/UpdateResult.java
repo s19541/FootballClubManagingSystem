@@ -5,6 +5,7 @@ import Model.Match;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -88,7 +89,7 @@ public class UpdateResult {
      * Method which change panel to finished matches panel
      * @param e Unused
      */
-    public void buttonCancelActionPerformed(ActionEvent e){
+    private void buttonCancelActionPerformed(ActionEvent e){
         GuiMethods.setPanel(new StartedMatches().getPanelFinishedMatches());
     }
 
@@ -96,22 +97,28 @@ public class UpdateResult {
      * Method which checking correctness of match result and when data are correct, save result to db and change panel to finished match panel
      * @param e Unused
      */
-    public void buttonSaveActionPerformed(ActionEvent e){
+    private void buttonSaveActionPerformed(ActionEvent e){
         if(textFieldGoalsFor.getText().equals(""))
             textFieldGoalsFor.setText("0");
         if(textFieldGoalsAgainst.getText().equals(""))
             textFieldGoalsAgainst.setText("0");
-        if(Integer.parseInt(textFieldGoalsFor.getText()) < 0 || Integer.parseInt(textFieldGoalsAgainst.getText()) < 0) {
+        try {
+            if (Integer.parseInt(textFieldGoalsFor.getText()) < 0 || Integer.parseInt(textFieldGoalsAgainst.getText()) < 0) {
+                JOptionPane.showMessageDialog(panelUpdateResult.getParent(),
+                        "Result can't be negative!",
+                        "ERROR",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                updatingMatch.setGoalsFor(Integer.parseInt(textFieldGoalsFor.getText()));
+                updatingMatch.setGoalsAgainst(Integer.parseInt(textFieldGoalsAgainst.getText()));
+                MatchController.updateMatch(updatingMatch);
+                GuiMethods.setPanel(new StartedMatches().getPanelFinishedMatches());
+            }
+        }catch(Exception ex){
             JOptionPane.showMessageDialog(panelUpdateResult.getParent(),
-                    "Result can't be negative!",
+                    "Entered wrong result!",
                     "ERROR",
                     JOptionPane.ERROR_MESSAGE);
-        }else {
-            updatingMatch.setGoalsFor(Integer.parseInt(textFieldGoalsFor.getText()));
-            updatingMatch.setGoalsAgainst(Integer.parseInt(textFieldGoalsAgainst.getText()));
-            MatchController.updateMatch(updatingMatch);
-            GuiMethods.setPanel(new StartedMatches().getPanelFinishedMatches());
         }
     }
-
 }
