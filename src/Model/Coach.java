@@ -58,7 +58,7 @@ public class Coach extends Worker{
 
     /**
      * Gets list of trainings conducted by the coach
-     * @return list of trainings conducted by the coach
+     * @return List of trainings conducted by the coach
      */
     @ManyToMany(mappedBy = "coaches")
     public List<Training> getTrainings() {
@@ -67,7 +67,7 @@ public class Coach extends Worker{
 
     /**
      * Sets list of trainings conducted by the coach
-     * @return list of trainings conducted by the coach
+     * @param trainings List of trainings conducted by the coach
      */
     public void setTrainings(List<Training> trainings) {
         this.trainings = trainings;
