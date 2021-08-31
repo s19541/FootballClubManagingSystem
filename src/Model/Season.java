@@ -139,7 +139,7 @@ public class Season {
     }
 
     /**
-     * Creates new club season stats
+     * Adds club to season with stats
      * @param club Club
      * @param matchWon Number of matches won
      * @param matchDrawn Number of matches drawn
