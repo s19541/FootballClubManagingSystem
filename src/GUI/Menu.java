@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
  * @since 2021-08-30
  */
 public class Menu {
-    private JButton personsButton;
+    private JButton peopleButton;
     private JPanel panelMain;
     private JButton matchesButton;
     private JButton trainingsButton;
@@ -27,7 +27,7 @@ public class Menu {
         matchesButton.addActionListener(e -> buttonMatchesActionPerformed(e));
         ActionListener notAvailableActionListener = e -> notAvailableActionPerformed(e);
 
-        personsButton.addActionListener(notAvailableActionListener);
+        peopleButton.addActionListener(notAvailableActionListener);
         trainingsButton.addActionListener(notAvailableActionListener);
         leagueButton.addActionListener(notAvailableActionListener);
     }
