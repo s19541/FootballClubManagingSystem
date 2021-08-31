@@ -59,7 +59,7 @@ public class UpdateResult {
      * Method which setup score of updating match
      */
     private void setupScore(){
-        if(updatingMatch.getGoalsFor() != -1){
+        if(updatingMatch.getGoalsFor() != null){
             textFieldGoalsFor.setText(String.valueOf(updatingMatch.getGoalsFor()));
             textFieldGoalsAgainst.setText(String.valueOf(updatingMatch.getGoalsAgainst()));
         }

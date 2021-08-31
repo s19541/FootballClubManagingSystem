@@ -65,6 +65,12 @@ public class StartedMatches {
      */
     private Color getColor(int index){
         Color color;
+
+        if(startedMatches.get(index).getGoalsFor() == null || startedMatches.get(index).getGoalsAgainst() == null){
+            color = Color.YELLOW;
+            return color;
+        }
+
         if (startedMatches.get(index).getGoalsFor() > startedMatches.get(index).getGoalsAgainst()) {
             color = Color.GREEN;
         } else if(startedMatches.get(index).getGoalsFor() < startedMatches.get(index).getGoalsAgainst()){

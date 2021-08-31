@@ -26,14 +26,12 @@ public class Match {
     private int ticketPrice;
     /**
      * Number of goals for
-     * -1 = not assigned
      */
-    private int goalsFor = -1;
+    private Integer goalsFor;
     /**
      * Number of goals against
-     * -1 = not assigned
      */
-    private int goalsAgainst = -1;
+    private Integer goalsAgainst;
     /**
      * Opponent
      */
@@ -76,7 +74,7 @@ public class Match {
      * @param goalsFor Number of goals for
      * @param goalsAgainst Number of goals against
      */
-    public Match(LocalDateTime date, int ticketPrice, Club opponent, int goalsFor, int goalsAgainst){
+    public Match(LocalDateTime date, int ticketPrice, Club opponent, Integer goalsFor, Integer goalsAgainst){
         this.date = date;
         this.ticketPrice = ticketPrice;
         setClub(opponent);
@@ -142,7 +140,7 @@ public class Match {
      * @return Number of goals for
      */
     @Basic
-    public int getGoalsFor() {
+    public Integer getGoalsFor() {
         return goalsFor;
     }
 
@@ -150,7 +148,7 @@ public class Match {
      * Sets number of goals for
      * @param goalsFor Number of goals for
      */
-    public void setGoalsFor(int goalsFor) {
+    public void setGoalsFor(Integer goalsFor) {
         this.goalsFor = goalsFor;
     }
 
@@ -159,7 +157,7 @@ public class Match {
      * @return Number of goals against
      */
     @Basic
-    public int getGoalsAgainst() {
+    public Integer getGoalsAgainst() {
         return goalsAgainst;
     }
 
@@ -167,7 +165,7 @@ public class Match {
      * Sets number of goals against
      * @param goalsAgainst Number of goals against
      */
-    public void setGoalsAgainst(int goalsAgainst) {
+    public void setGoalsAgainst(Integer goalsAgainst) {
         this.goalsAgainst = goalsAgainst;
     }
 
@@ -313,7 +311,7 @@ public class Match {
     @Override
     public String toString() {
         String retString = club.getName() + " ";
-        if(goalsFor != -1 && goalsAgainst != -1)
+        if(goalsFor != null && goalsAgainst != null)
             retString += goalsFor+ ":" + goalsAgainst + " ";
         DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         retString += date.format(format);
